@@ -1,0 +1,35 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #0f172a; color: #e5e7eb; }
+.header { padding: 24px; text-align: center; background: #111827; border-bottom: 1px solid #1f2937; }
+.header h1 { margin: 0; font-size: 20px; }
+.subtitle { margin: 8px 0 0; font-size: 13px; color: #9ca3af; }
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 360px 1fr; gap: 24px; }
+.controls { background: #111827; padding: 16px; border: 1px solid #1f2937; border-radius: 10px; }
+.control-group { margin-bottom: 12px; display: flex; gap: 8px; align-items: center; }
+.label { width: 120px; font-size: 13px; color: #9ca3af; }
+input[type="file"], input[type="password"], select { flex: 1; background: #0b1220; color: #e5e7eb; border: 1px solid #1f2937; padding: 8px; border-radius: 6px; }
+input[type="range"] { flex: 1; }
+.btn { background: #1f2937; color: #e5e7eb; border: 1px solid #374151; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; }
+.btn.primary { background: #3b82f6; border-color: #60a5fa; color: white; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.hint { font-size: 12px; color: #93c5fd; }
+.status { margin-top: 10px; font-size: 12px; color: #93c5fd; min-height: 18px; }
+.preview { background: #111827; padding: 16px; border: 1px solid #1f2937; border-radius: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.preview-item h3 { margin: 0 0 8px; font-size: 14px; color: #e5e7eb; }
+.preview-item { position: relative; }
+.point-overlay {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+.inline { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.preview-item img { max-width: 100%; height: auto; background: #0b1220; border: 1px solid #1f2937; border-radius: 8px; cursor: zoom-in; }
+.footer { padding: 16px; text-align: center; color: #9ca3af; font-size: 12px; }
+
+/* 放大预览层样式 */
+.zoom-overlay { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.85); backdrop-filter: blur(2px); display: none; z-index: 1000; }
+.zoom-overlay.active { display: grid; grid-template-rows: auto 1fr; }
+.zoom-toolbar { padding: 8px 12px; display: flex; align-items: center; gap: 8px; justify-content: space-between; background: #0b1220; border-bottom: 1px solid #1f2937; }
+.zoom-stage { position: relative; overflow: hidden; }
+.zoom-stage img { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(1); transform-origin: center center; will-change: transform; max-width: none; max-height: none; }

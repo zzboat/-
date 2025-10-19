@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>图像清晰增强与语义分割（Swin2SR + SAM 2）</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>图像清晰增强与语义分割</h1>
+      <p class="subtitle">上传图片，可进行清晰增强（Swin2SR）或语义分割（SAM 2）；支持无 Token 分割回退与离线锐化回退。</p>
+    </header>
+
+    <main class="container">
+      <section class="controls">
+        <div class="control-group">
+          <label class="label" for="fileInput">选择图片：</label>
+          <input id="fileInput" type="file" accept="image/*" />
+        </div>
+
+        <div class="control-group">
+          <label class="label" for="taskSelect">处理模式：</label>
+          <select id="taskSelect">
+            <option value="enhance">图像清晰增强（Swin2SR）</option>
+            <option value="segment">图像语义分割（SAM 2）</option>
+          </select>
+        </div>
+
+        <div class="control-group" id="interactiveParams" style="display:none">
+          <label class="label">交互式分割：</label>
+          <div class="inline">
+            <label><input id="interactiveToggle" type="checkbox" /> 启用点击选取</label>
+            <button id="resetPointsBtn" class="btn">重置提示点</button>
+            <button id="restoreOriginalBtn" class="btn">恢复原图</button>
+            <span class="hint">点击图片添加正样本；按住 Alt 添加负样本</span>
+          </div>
+        </div>
+
+        <div class="control-group" id="segParams" style="display:none">
+          <label class="label" for="maskAlpha">遮罩透明度：</label>
+          <input id="maskAlpha" type="range" min="0" max="100" value="50" />
+          <span class="hint">用于叠加分割结果显示效果</span>
+        </div>
+
+        <div class="control-group">
+          <label class="label" for="hfToken">Hugging Face Token（可选）：</label>
+          <input id="hfToken" type="password" placeholder="粘贴你的 HF Token" />
+          <button id="saveTokenBtn" class="btn">保存Token</button>
+          <a class="hint" href="https://huggingface.co/settings/tokens" target="_blank" rel="noreferrer">获取 Token</a>
+        </div>
+
+        <div class="actions">
+          <button id="enhanceBtn" class="btn primary" disabled>开始处理</button>
+          <button id="downloadBtn" class="btn" disabled>下载结果</button>
+        </div>
+
+        <div id="status" class="status">就绪</div>
+      </section>
+
+      <section class="preview">
+        <div class="preview-item">
+          <h3>原图</h3>
+          <img id="inputPreview" alt="原图预览" />
+          <canvas id="inputOverlay" class="point-overlay"></canvas>
+        </div>
+        <div class="preview-item">
+          <h3>处理结果</h3>
+          <img id="outputPreview" alt="处理结果预览" />
+        </div>
+      </section>
+    </main>
+
+  
+
+    <div id="zoomOverlay" class="zoom-overlay" aria-hidden="true">
+      <div class="zoom-toolbar">
+        <button id="zoomCloseBtn" class="btn">关闭</button>
+        <span id="zoomStatus" class="status"></span>
+      </div>
+      <div id="zoomStage" class="zoom-stage">
+        <img id="zoomImage" alt="放大预览" />
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script src="./zoom.js"></script>
+  </body>
+</html>
